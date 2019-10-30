@@ -1,5 +1,5 @@
 from django.contrib import admin
-from booktest.models import AreaInfo
+from booktest.models import AreaInfo  # 注册模型类
 
 
 # 块的嵌入方式
@@ -35,4 +35,4 @@ class AreaInfoAdmin(admin.ModelAdmin):
     inlines = [AreaTabularInline]  # 块的嵌入方式
 
 
-admin.site.register(AreaInfo, AreaInfoAdmin)  # 注册
+admin.site.register(AreaInfo, AreaInfoAdmin)  # 注册模型类
