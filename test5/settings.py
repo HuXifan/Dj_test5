@@ -35,7 +35,10 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    'booktest.middleware.BlockIpMiddleware',  # 注册中间件类
+    # 'booktest.middleware.BlockIpMiddleware',  # 注册中间件类
+    # 'booktest.middleware.TestMiddleware',  # 注册中间件类
+    'booktest.middleware.ExceptionTest1Middleware',
+    'booktest.middleware.ExceptionTest2Middleware',
 )
 
 ROOT_URLCONF = 'test5.urls'
@@ -78,7 +81,7 @@ DATABASES = {
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
 LANGUAGE_CODE = 'zh-hans'
-
+# 本地化
 TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True

@@ -28,6 +28,6 @@ def index(request):
     '''首页'''
     # 获取浏览器段的ip地址
     # user_ip = request.META['REMOTE_ADDR']
-    # print(user_ip)
-
+    print('index')
+    # num = 'a' +1  # error
     return render(request, 'booktest/index.html')
