@@ -35,6 +35,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'booktest.middleware.BlockIpMiddleware',  # 注册中间件类
 )
 
 ROOT_URLCONF = 'test5.urls'
