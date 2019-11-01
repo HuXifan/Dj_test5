@@ -6,10 +6,26 @@
 </head>
 <body>
 <ul>
-{#    {% for area in page.object_list %}#}
-        {% for area in page %}
-        <li>{{area.atitle}}</li>
+    {#    {% for area in page.object_list %}#}
+    {% for area in page %}
+        <li>{{ area.atitle }}</li>
     {% endfor %}
 </ul>
+{% if page.has_previous %}
+    <a href="/show_area{{ p.previous_page_number }}">&lt;上一页</a>
+{% endif %}
+{% for p in page.paginator.page_range %}
+    {% if p == page.number %}
+        {# p==当前页,显示为p,不显示超链接#}
+        {{ p }}
+    {% else %}
+        <a href="show_area{{ p }}">{{ p }}</a>
+        {# 不是当前页增加超链接#}
+    {% endif %}
+
+{% endfor %}
+{% if page.has_next %}
+    <a href="/show_area{{ p.next_page_number }}">下一页&gt;</a>
+{% endif %}
 </body>
 </html>

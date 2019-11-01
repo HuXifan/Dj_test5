@@ -72,19 +72,23 @@ def upload_handle(request):
 from django.core.paginator import Paginator
 
 
-# /show_area
-def show_area(request):
+# /show_area(d+)页码
+# 前端访问地址加入页码
+def show_area(request, p):
     '''分页'''
     # 1 查询所有省级地区信息
     areas = AreaInfo.objects.filter(aParent__isnull=True)
     # 1.1 分页,每页显示十条
     paginator = Paginator(areas, 10)
-    # 1.2获取第一页内容
-    # page是Page类的实例对象
-    page = paginator.page(1)
+    # 1.2获取第p页内容    # page是Page类的实例对象
+    if p == '':
+        p = 1  # 默认第一页内容
+    else:
+        p = int(p)
+    page = paginator.page(p)
     print(paginator.num_pages)  # 返回页码数 # 4
     print(paginator.page_range)  # 返回分页后页码的列表 # [1, 2, 3, 4]
-    # 2 使用模板
+    # 2 使用模板,传递数据
     return render(request, 'booktest/show_area.html', {'page': page})  # 'areas': areas,
 
 
