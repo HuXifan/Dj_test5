@@ -7,6 +7,7 @@
 </head>
 <body>
 <form method="post" enctype="multipart/form-data" action="/upload_handle">
+{# 上上传方式为post,编码指定为"multipart/form-data"才会有数据#}
     {% csrf_token %}
     <input type="file" name="pic"> <br>
     <input type="submit" value="上传"> <br>

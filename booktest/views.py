@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
+from booktest.models import PicTest
 
 
 # 装饰器：实验禁止ip访问功能
@@ -29,6 +30,10 @@ def index(request):
     # 获取浏览器段的ip地址
     # user_ip = request.META['REMOTE_ADDR']
     print('index')
+    print(settings.FILE_UPLOAD_HANDLERS)
+    # ('django.core.files.uploadhandler.MemoryFileUploadHandler',
+    # 'django.core.files.uploadhandler.TemporaryFileUploadHandler')
+    
     # num = 'a' +1  # error
     return render(request, 'booktest/index.html')
 
@@ -41,15 +46,24 @@ def show_upload(request):
 
 def upload_handle(request):
     '''处理上传文件'''
-    # 1 获取上传的文件的处理对象
-    pic = request.FILES['pic']
-    print(type(pic))
+    # 1 获取上传的文件的处理对象,上床文件的处理对象可以获取到名字和内容
+    pic = request.FILES['pic']  # request对象属性FILES,返回上传文件的处理对象
+    # print(type(pic))
+    # <class 'django.core.files.uploadedfile.InMemoryUploadedFile'>  # 上传文件大小不大于2.5M,文件放在内存中InMemory
+    # <class 'django.core.files.uploadedfile.TemporaryUploadedFile'>  # 文件大于2.5M文件放到一个临时文件Temporary中
+    # print(pic.name)  # 可以获取上传文件的名字
+    # pic.chunks()  # 分块的返回文件内容,是一个生成器,可以遍历它读取内容
 
-    # 2 创建一个文件
-
-    # 3 获取上传文件的内容,并写入创建的文件中
+    # 2 创建一个文件.拼接路径
+    save_path = '%s/booktest/%s' % (settings.MEDIA_ROOT, pic.name)  # 保存文件路径
+    # 创建文件  二进制wb
+    with open(save_path, 'wb') as f:
+        # 3 获取上传文件的内容,并不断写入创建的文件中
+        for content in pic.chunks():
+            f.write(content)
 
     # 4 在数据库中保存上传文件的记录
+    PicTest.objects.create(good_pic='booktest/%s' % pic.name)
 
     # 5 返回
     return HttpResponse('ok')
