@@ -1,5 +1,5 @@
 from django.contrib import admin
-from booktest.models import AreaInfo  # 注册模型类
+from booktest.models import AreaInfo,PicTest # 注册模型类
 
 
 # 块的嵌入方式
@@ -36,3 +36,4 @@ class AreaInfoAdmin(admin.ModelAdmin):
 
 
 admin.site.register(AreaInfo, AreaInfoAdmin)  # 注册模型类
+admin.site.register(PicTest)  # 注册模型类

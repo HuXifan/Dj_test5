@@ -25,3 +25,8 @@ class AreaInfo(models.Model):
             return ''
         return self.aParent.atitle  # 返回父级地区地区标题
     parent.short_description = '父级地区名'
+
+
+class PicTest(models.Model):
+    '''上传图片'''
+    good_pic = models.ImageField(upload_to='booktest')  # 目录相对于media

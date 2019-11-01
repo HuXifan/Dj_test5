@@ -31,3 +31,25 @@ def index(request):
     print('index')
     # num = 'a' +1  # error
     return render(request, 'booktest/index.html')
+
+
+# /show_upload
+def show_upload(request):
+    '''显示上传图片页面'''
+    return render(request, 'booktest/upload_pic.html')
+
+
+def upload_handle(request):
+    '''处理上传文件'''
+    # 1 获取上传的文件的处理对象
+    pic = request.FILES['pic']
+    print(type(pic))
+
+    # 2 创建一个文件
+
+    # 3 获取上传文件的内容,并写入创建的文件中
+
+    # 4 在数据库中保存上传文件的记录
+
+    # 5 返回
+    return HttpResponse('ok')
