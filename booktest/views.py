@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
-from booktest.models import PicTest
+from booktest.models import PicTest, AreaInfo
 
 
 # 装饰器：实验禁止ip访问功能
@@ -33,7 +33,7 @@ def index(request):
     print(settings.FILE_UPLOAD_HANDLERS)
     # ('django.core.files.uploadhandler.MemoryFileUploadHandler',
     # 'django.core.files.uploadhandler.TemporaryFileUploadHandler')
-    
+
     # num = 'a' +1  # error
     return render(request, 'booktest/index.html')
 
@@ -67,3 +67,46 @@ def upload_handle(request):
 
     # 5 返回
     return HttpResponse('ok')
+
+
+from django.core.paginator import Paginator
+
+
+# /show_area
+def show_area(request):
+    '''分页'''
+    # 1 查询所有省级地区信息
+    areas = AreaInfo.objects.filter(aParent__isnull=True)
+    # 1.1 分页,每页显示十条
+    paginator = Paginator(areas, 10)
+    # 1.2获取第一页内容
+    # page是Page类的实例对象
+    page = paginator.page(1)
+    print(paginator.num_pages)  # 返回页码数 # 4
+    print(paginator.page_range)  # 返回分页后页码的列表 # [1, 2, 3, 4]
+    # 2 使用模板
+    return render(request, 'booktest/show_area.html', {'page': page})  # 'areas': areas,
+
+
+"""
+Paginator类对象的属性:
+属性名 说明
+num_pages 返回分页之后的总页数
+page_range 返回分页后页码的列表
+Paginator类对象的方法:
+方法名 说明
+page(self, number) 返回第number页的Page类实例对象
+
+Page类对象的属性：
+属性名 说明
+number 返回当前页的页码
+object_list 返回包含当前页的数据的查询集
+paginator 返回对应的Paginator类对象
+
+Page类对象的方法：
+属性名 说明
+has_previous 判断当前页是否有前一页
+has_next 判断当前页是否有下一页
+previous_page_number 返回前一页的页码
+next_page_number 返回下一页的页码
+"""
