@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.conf import settings
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from booktest.models import PicTest, AreaInfo
 
 
@@ -73,21 +73,21 @@ from django.core.paginator import Paginator
 
 
 # /show_area(d+)页码
-# 前端访问地址加入页码
+# 前端访问地址加入页码p
 def show_area(request, p):
     '''分页'''
     # 1 查询所有省级地区信息
     areas = AreaInfo.objects.filter(aParent__isnull=True)
-    # 1.1 分页,每页显示十条
-    paginator = Paginator(areas, 10)
+    # 1.1 分页,每页显示十条  创建类对象
+    paginator1 = Paginator(areas, 10)
     # 1.2获取第p页内容    # page是Page类的实例对象
     if p == '':
         p = 1  # 默认第一页内容
     else:
         p = int(p)
-    page = paginator.page(p)
-    print(paginator.num_pages)  # 返回页码数 # 4
-    print(paginator.page_range)  # 返回分页后页码的列表 # [1, 2, 3, 4]
+    page = paginator1.page(p)  # 类对象的方法page(P)传入一个数字number,返回下标出的Page对象
+    print(paginator1.num_pages)  # 返回页码数 # 4
+    print(paginator1.page_range)  # 返回分页后页码的列表 # [1, 2, 3, 4]
     # 2 使用模板,传递数据
     return render(request, 'booktest/show_area.html', {'page': page})  # 'areas': areas,
 
@@ -114,3 +114,38 @@ has_next 判断当前页是否有下一页
 previous_page_number 返回前一页的页码
 next_page_number 返回下一页的页码
 """
+
+
+# /areas
+def areas(request):
+    '''显示省市县选择'''
+    return render(request, 'booktest/areas.html')
+
+
+# /prov
+def prov(request):
+    '''获取所有省级地区信息'''
+    # 1
+    areas = AreaInfo.objects.filter(aParent__isnull=True)  # 对象是不能转化成一个Json数据的
+    # 1.2 变量area拼接出Json数据:标题,id
+    areas_list = []
+    for area in areas:
+        areas_list.append((area.id, area.atitle))
+
+    # 2 返回数据
+    return JsonResponse({'data': areas_list})
+
+
+# /city
+def city(request, pid):
+    '''根据pid获取下级地区信息'''
+    # 1 获取pid对应地区的下级地区
+    # area = AreaInfo.objects.get(id=pid)
+    # areas = area.areainfo_set.all()
+
+    # 2
+    citys = AreaInfo.objects.filter(aParent_id=pid)
+    citys_list = []
+    for city in citys:
+        citys_list.append([city.id, city.atitle])
+    return JsonResponse({'data': citys_list})

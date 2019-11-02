@@ -27,11 +27,12 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/.pyenv/versions/dj182/bin/python3.5" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/static/js" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/static/js" />
       <recent name="$PROJECT_DIR$/static/media/booktest" />
       <recent name="$PROJECT_DIR$/templates/admin" />
       <recent name="$PROJECT_DIR$/booktest" />
@@ -86,7 +87,8 @@
       <updated>1572401676568</updated>
       <workItem from="1572401677932" duration="16635000" />
       <workItem from="1572439268425" duration="4308000" />
-      <workItem from="1572604050815" duration="7111000" />
+      <workItem from="1572604050815" duration="7471000" />
+      <workItem from="1572654801608" duration="13740000" />
     </task>
     <servers />
   </component>
