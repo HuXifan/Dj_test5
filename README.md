@@ -1,4 +1,7 @@
-# Dj_test5
+# Dj_test5 图片上传及分页
+
+## 项目环境
+Linux(Deepin): python3.5.3 + Django1.8.2 + pycharm2019.2
 
 ## 静态文件
 项目中的CSS、图片、js都是静态文件。一般会将静态文件放到一个单独的目录中，以方便管理。
@@ -280,3 +283,40 @@ class AreaAdmin(admin.ModelAdmin):
 编辑base_site.html文件：
 
 4）在浏览器中转到列表页面，其它后台的模板可以按照相同的方式进行修改。
+
+
+## 上传图片
+在python中进行图片操作，需要安装包PIL。
+pip install Pillow==3.4.1
+在Django中上传图片包括两种方式：
+1 在管理页面admin中上传图片
+2 自定义form表单中上传图片
+上传图片后，将图片存储在服务器上，然后将图片的路径存储在表中。
+### 创建包含图片的模型类
+将模型类的属性定义成models.ImageField类型。
+1）打开booktest/models.py文件，定义模型类PicTest。
+class PicTest(models.Model):
+    pic = models.ImageField(upload_to='booktest/')
+2）回到命令行中，生成迁移。
+python manage.py makemigrations
+3）打开booktest/migrations/0001_initial.py文件，删除AreaInfo部分，因为这个表已经存在。
+4）回到命令行中，执行迁移。
+python manage.py migrate
+
+## 分页
+Django提供了数据分页的类，这些类被定义在django/core/paginator.py中。 
+类Paginator用于对列进行一页n条数据的分页运算。类Page用于表示第m页的数据。
+### Paginator类实例对象
+方法_init_(列表,int)：返回分页对象，第一个参数为列表数据，第二个参数为每页数据的条数。
+属性count：返回对象总数。
+属性num_pages：返回页面总数。
+属性page_range：返回页码列表，从1开始，例如[1, 2, 3, 4]。
+方法page(m)：返回Page类实例对象，表示第m页的数据，下标以1开始。
+### Page类实例对象
+调用Paginator对象的page()方法返回Page对象，不需要手动构造。
+属性object_list：返回当前页对象的列表。
+属性number：返回当前是第几页，从1开始。
+属性paginator：当前页对应的Paginator对象。
+方法has_next()：如果有下一页返回True。
+方法has_previous()：如果有上一页返回True。
+方法len()：返回当前页面对象的个数。
