@@ -46,7 +46,7 @@ def show_upload(request):
 
 def upload_handle(request):
     '''处理上传文件'''
-    # 1 获取上传的文件的处理对象,上床文件的处理对象可以获取到名字和内容
+    # 1 获取上传的文件的处理对象,上传文件的处理对象可以获取到名字和内容
     pic = request.FILES['pic']  # request对象属性FILES,返回上传文件的处理对象
     # print(type(pic))
     # <class 'django.core.files.uploadedfile.InMemoryUploadedFile'>  # 上传文件大小不大于2.5M,文件放在内存中InMemory
@@ -144,7 +144,7 @@ def city(request, pid):
     # areas = area.areainfo_set.all()
 
     # 2
-    citys = AreaInfo.objects.filter(aParent_id=pid)
+    citys = AreaInfo.objects.filter(aParent__id=pid)
     citys_list = []
     for city in citys:
         citys_list.append([city.id, city.atitle])
